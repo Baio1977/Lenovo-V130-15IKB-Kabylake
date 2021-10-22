@@ -32,9 +32,9 @@
 ### What works and What doesn't or WIP:
 
 - [x] Intel HD 620 iGPU HDMI Output
-- [x] ALC282 Internal Speakers
-- [x] ALC282 Native Combojack
-- [x] ALC282 HDMI Audio Output
+- [x] CX20751\2 Internal Speakers
+- [x] CX20751\2 Native Combojack
+- [x] CX20751\2 HDMI Audio Output
 - [x] All USB Ports 
 - [x] SpeedStep / Sleep / Wake
 - [x] Touchpad with gesture
@@ -58,13 +58,13 @@
 
 ## Info Section Power
 
-![pcisection](./Screenshot/6.png)
+![pcisection](./Screenshot/6.jpg)
 
 ## Info Section SSDT
 
-![SSDT HP 250 G6](./Screenshot/7.png)
+![SSDT](./Screenshot/7.png)
 
-![SSDT HP 250 G6](./Screenshot/8.png)
+![SSDT](./Screenshot/8.png)
 
 ## Credits
 
