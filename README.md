@@ -22,7 +22,7 @@
 | BootLoader       | OpenCore 0.7.4                     |
 | Lan              | Realtek 8111                       |
 
-![infocatalina](./Screenshot/1.jpg)
+![infocatalina](./Screenshot/1.png)
 
 ## DPCIManager Screenshot
 
