@@ -12,9 +12,9 @@
 | Component        | Brank                              |
 | ---------------- | ---------------------------------- |
 | CPU              | Intel I5 7200U                     |
-| iGPU             | HD 620.                            |
+| iGPU             | HD 620                             |
 | Display          | 1920x1080                          |
-| Audio            | CX20751\2.                         |
+| Audio            | CX20751\2                          |
 | Ram              | 8 Gb ddr4 2400 Mhz                 |
 | Wifi + Bluetooth | AC 3165                            |
 | SSD              | Kingston A400 512gb                |
