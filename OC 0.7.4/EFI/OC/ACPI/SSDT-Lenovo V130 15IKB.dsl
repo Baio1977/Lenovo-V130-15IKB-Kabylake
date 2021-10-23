@@ -5,13 +5,13 @@
  * 
  * Disassembling to symbolic ASL+ operators
  *
- * Disassembly of iASLUmB2Yh.aml, Fri Oct 22 21:17:29 2021
+ * Disassembly of iASLQY4tFX.aml, Sat Oct 23 08:09:54 2021
  *
  * Original Table Header:
  *     Signature        "SSDT"
- *     Length           0x00000428 (1064)
+ *     Length           0x00000659 (1625)
  *     Revision         0x02
- *     Checksum         0x55
+ *     Checksum         0x8E
  *     OEM ID           "HACK"
  *     OEM Table ID     "HackLife"
  *     OEM Revision     0x00000000 (0)
@@ -25,17 +25,36 @@ DefinitionBlock ("", "SSDT", 2, "HACK", "HackLife", 0x00000000)
     External (_SB_.PCI0.GFX0, DeviceObj)
     External (_SB_.PCI0.I2C0, DeviceObj)
     External (_SB_.PCI0.I2C0.TPD0, IntObj)
+    External (_SB_.PCI0.I2C0.TPD0.SBFB, IntObj)
+    External (_SB_.PCI0.I2C0.TPD0.SBFG, IntObj)
     External (_SB_.PCI0.LPCB, DeviceObj)
-    External (_SB_.PCI0.LPCB.ADP1, DeviceObj)
+    External (_SB_.PCI0.LPCB.EC0_, DeviceObj)
+    External (_SB_.PCI0.LPCB.EC0_.ADP1, DeviceObj)
     External (_SB_.PCI0.SBUS, DeviceObj)
+    External (BADR, FieldUnitObj)
+    External (GNUM, MethodObj)    // 1 Arguments
+    External (GPDI, FieldUnitObj)
+    External (HID2, FieldUnitObj)
+    External (HIDD, MethodObj)    // 5 Arguments
+    External (HIDG, FieldUnitObj)
+    External (INT1, FieldUnitObj)
+    External (INT2, FieldUnitObj)
+    External (INUM, MethodObj)    // 1 Arguments
+    External (OSYS, FieldUnitObj)
     External (SDM0, FieldUnitObj)
-    External (XPRW, MethodObj)    // 2 Arguments
+    External (SDS0, FieldUnitObj)
+    External (SPED, FieldUnitObj)
+    External (TP7D, MethodObj)    // 6 Arguments
+    External (TP7G, FieldUnitObj)
+    External (TPDB, FieldUnitObj)
+    External (TPDH, FieldUnitObj)
+    External (TPDS, FieldUnitObj)
 
     Scope (\)
     {
         If (_OSI ("Darwin"))
         {
-            SDM0 = Zero
+            SDS0 = 0x03
         }
 
         Scope (_PR)
@@ -89,31 +108,95 @@ DefinitionBlock ("", "SSDT", 2, "HACK", "HackLife", 0x00000000)
                     }
                 }
 
-                Scope (I2C0)
+                If (_OSI ("Darwin"))
                 {
-                    Scope (TPD0)
+                    Scope (I2C0)
                     {
-                        If (_OSI ("Darwin"))
+                        Device (TPDX)
                         {
-                            Name (OSYS, 0x07DC)
+                            Name (HID2, Zero)
+                            Name (_STA, 0x0F)  // _STA: Status
+                            Name (SBFB, ResourceTemplate ()
+                            {
+                                I2cSerialBusV2 (0x0020, ControllerInitiated, 0x00061A80,
+                                    AddressingMode7Bit, "\\_SB.PCI0.I2C0",
+                                    0x00, ResourceConsumer, _Y00, Exclusive,
+                                    )
+                            })
+                            Name (SBFI, ResourceTemplate ()
+                            {
+                                Interrupt (ResourceConsumer, Level, ActiveLow, ExclusiveAndWake, ,, _Y01)
+                                {
+                                    0x00000000,
+                                }
+                            })
+                            Name (SBFG, ResourceTemplate ()
+                            {
+                                GpioInt (Level, ActiveLow, ExclusiveAndWake, PullDefault, 0x0000,
+                                    "\\_SB.PCI0.GPI0", 0x00, ResourceConsumer, ,
+                                    )
+                                    {   // Pin list
+                                        0x0000
+                                    }
+                            })
+                            CreateWordField (SBFB, \_SB.PCI0.I2C0.TPDX._Y00._ADR, BADR)  // _ADR: Address
+                            CreateDWordField (SBFB, \_SB.PCI0.I2C0.TPDX._Y00._SPE, SPED)  // _SPE: Speed
+                            CreateWordField (SBFG, 0x17, INT1)
+                            CreateDWordField (SBFI, \_SB.PCI0.I2C0.TPDX._Y01._INT, INT2)  // _INT: Interrupts
+                            Name (_HID, "XXXX0000")  // _HID: Hardware ID
+                            Name (_CID, "PNP0C50" /* HID Protocol Device (I2C bus) */)  // _CID: Compatible ID
+                            Name (_S0W, 0x03)  // _S0W: S0 Device Wake State
+                            Method (_DSM, 4, Serialized)  // _DSM: Device-Specific Method
+                            {
+                                If ((Arg0 == HIDG))
+                                {
+                                    Return (HIDD (Arg0, Arg1, Arg2, Arg3, HID2))
+                                }
+
+                                If ((Arg0 == TP7G))
+                                {
+                                    Return (TP7D (Arg0, Arg1, Arg2, Arg3, SBFB, SBFG))
+                                }
+
+                                Return (Buffer (One)
+                                {
+                                     0x00                                             // .
+                                })
+                            }
+
+                            Method (_CRS, 0, NotSerialized)  // _CRS: Current Resource Settings
+                            {
+                                Return (ConcatenateResTemplate (SBFB, SBFG))
+                            }
+
+                            Method (_INI, 0, NotSerialized)  // _INI: Initialize
+                            {
+                                INT1 = GNUM (GPDI)
+                                INT2 = INUM (GPDI)
+                                _HID = "SYNA2B61"
+                                HID2 = TPDH /* External reference */
+                                BADR = TPDB /* External reference */
+                                If ((TPDS == Zero))
+                                {
+                                    SPED = 0x000186A0
+                                }
+
+                                If ((TPDS == One))
+                                {
+                                    SPED = 0x00061A80
+                                }
+
+                                If ((TPDS == 0x02))
+                                {
+                                    SPED = 0x000F4240
+                                }
+                            }
                         }
                     }
                 }
 
                 Scope (LPCB)
                 {
-                    Scope (ADP1)
-                    {
-                        If (_OSI ("Darwin"))
-                        {
-                            Name (_PRW, Package (0x02)  // _PRW: Power Resources for Wake
-                            {
-                                0x1C, 
-                                0x03
-                            })
-                        }
-                    }
-
                     Device (ALS0)
                     {
                         Name (_HID, "ACPI0008" /* Ambient Light Sensor Device */)  // _HID: Hardware ID
@@ -197,6 +280,21 @@ DefinitionBlock ("", "SSDT", 2, "HACK", "HackLife", 0x00000000)
                             Else
                             {
                                 Return (Zero)
+                            }
+                        }
+                    }
+
+                    Scope (EC0)
+                    {
+                        Scope (ADP1)
+                        {
+                            If (_OSI ("Darwin"))
+                            {
+                                Name (_PRW, Package (0x02)  // _PRW: Power Resources for Wake
+                                {
+                                    0x1C, 
+                                    0x03
+                                })
                             }
                         }
                     }
@@ -311,32 +409,6 @@ DefinitionBlock ("", "SSDT", 2, "HACK", "HackLife", 0x00000000)
                     }
                 }
             }
-        }
-
-        Method (GPRW, 2, NotSerialized)
-        {
-            If (_OSI ("Darwin"))
-            {
-                If ((0x6D == Arg0))
-                {
-                    Return (Package (0x02)
-                    {
-                        0x6D, 
-                        Zero
-                    })
-                }
-
-                If ((0x0D == Arg0))
-                {
-                    Return (Package (0x02)
-                    {
-                        0x0D, 
-                        Zero
-                    })
-                }
-            }
-
-            Return (XPRW (Arg0, Arg1))
         }
     }
 }
