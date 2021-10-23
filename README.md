@@ -73,5 +73,6 @@
 - [Dortania](https://github.com/dortania)
 - [Hackintoshlifeit](https://github.com/Hackintoshlifeit)
 - [rehabman](https://github.com/RehabMan)
+- [Lorys89](https://github.com/Lorys89)
 
 # If you need help please contact us on [Telegram](https://t.me/HackintoshLife_it) or [Web](https://www.hackintoshlife.it/)
