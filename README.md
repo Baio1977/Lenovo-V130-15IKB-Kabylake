@@ -13,7 +13,7 @@
 | ---------------- | ---------------------------------- |
 | CPU              | Intel I5 7200U                     |
 | iGPU             | CX20751\2                          |
-| Display          | 1366x768                           |
+| Display          | 1920x1080                          |
 | Audio            | Realtek ALC282                     |
 | Ram              | 8 Gb ddr4 2400 Mhz                 |
 | Wifi + Bluetooth | AC 3165                            |
