@@ -19,7 +19,7 @@
 | Wifi + Bluetooth | AC 3165                            |
 | SSD              | Kingston A400 512gb                |
 | SmBios           | MacbookPro 14,1                    |
-| BootLoader       | OpenCore 0.7.4                     |
+| BootLoader       | OpenCore                           |
 | Lan              | Realtek 8111                       |
 
 ![infocatalina](./Screenshot/1.png)
