@@ -126,7 +126,7 @@
                     <key>BundlePath</key>
                     <string>Lilu.kext</string>
                     <key>Comment</key>
-                    <string>V1.5.8 | Patch engine</string>
+                    <string>V1.5.9 | Patch engine</string>
                     <key>Enabled</key>
                     <true/>
                     <key>ExecutablePath</key>
@@ -216,7 +216,7 @@
                     <key>BundlePath</key>
                     <string>WhateverGreen.kext</string>
                     <key>Comment</key>
-                    <string>V1.5.5</string>
+                    <string>V1.5.6</string>
                     <key>Enabled</key>
                     <true/>
                     <key>ExecutablePath</key>
@@ -234,7 +234,7 @@
                     <key>BundlePath</key>
                     <string>AppleALC.kext</string>
                     <key>Comment</key>
-                    <string>V1.6.7 | Audio patches</string>
+                    <string>V1.6.8 | Audio patches</string>
                     <key>Enabled</key>
                     <true/>
                     <key>ExecutablePath</key>
@@ -643,7 +643,7 @@
                 <key>FuzzyMatch</key>
                 <true/>
                 <key>KernelArch</key>
-                <string>x86_64</string>
+                <string>Auto</string>
                 <key>KernelCache</key>
                 <string>Auto</string>
             </dict>
@@ -746,8 +746,6 @@
                 <dict>
                     <key>DefaultBackgroundColor</key>
                     <data>AAAAAA==</data>
-                    <key>UIScale</key>
-                    <data>AQ==</data>
                 </dict>
                 <key>4D1FDA02-38C7-4A6A-9CC6-4BCCA8B30102</key>
                 <dict>
@@ -866,7 +864,7 @@
                 <key>HideVerbose</key>
                 <true/>
                 <key>JumpstartHotPlug</key>
-                <true/>
+                <false/>
                 <key>MinDate</key>
                 <integer>0</integer>
                 <key>MinVersion</key>
@@ -884,6 +882,12 @@
                 <integer>50</integer>
                 <key>KeySubsequentDelay</key>
                 <integer>5</integer>
+                <key>PointerPollMask</key>
+                <integer>-1</integer>
+                <key>PointerPollMax</key>
+                <integer>80</integer>
+                <key>PointerPollMin</key>
+                <integer>10</integer>
                 <key>PointerSpeedDiv</key>
                 <integer>1</integer>
                 <key>PointerSpeedMul</key>
@@ -901,16 +905,18 @@
                 <false/>
                 <key>DisconnectHda</key>
                 <false/>
-                <key>MinimumVolume</key>
-                <integer>20</integer>
+                <key>MaximumGain</key>
+                <integer>-15</integer>
+                <key>MinimumAssistGain</key>
+                <integer>-30</integer>
+                <key>MinimumAudibleGain</key>
+                <integer>-55</integer>
                 <key>PlayChime</key>
                 <string>Auto</string>
                 <key>ResetTrafficClass</key>
                 <false/>
                 <key>SetupDelay</key>
                 <integer>0</integer>
-                <key>VolumeAmplifier</key>
-                <integer>143</integer>
             </dict>
             <key>ConnectDrivers</key>
             <true/>
@@ -1057,7 +1063,7 @@
                 <key>IgnoreInvalidFlexRatio</key>
                 <false/>
                 <key>ReleaseUsbOwnership</key>
-                <false/>
+                <true/>
                 <key>ReloadOptionRoms</key>
                 <false/>
                 <key>RequestBootVarRouting</key>
