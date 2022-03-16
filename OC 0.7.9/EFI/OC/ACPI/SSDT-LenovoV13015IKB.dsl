@@ -1,22 +1,22 @@
 /*
  * Intel ACPI Component Architecture
- * AML/ASL+ Disassembler version 20210331 (64-bit version)
- * Copyright (c) 2000 - 2021 Intel Corporation
+ * AML/ASL+ Disassembler version 20200925 (64-bit version)
+ * Copyright (c) 2000 - 2020 Intel Corporation
  * 
  * Disassembling to symbolic ASL+ operators
  *
- * Disassembly of iASLQY4tFX.aml, Sat Oct 23 08:09:54 2021
+ * Disassembly of iASLkfxDhI.aml, Wed Mar 16 21:09:58 2022
  *
  * Original Table Header:
  *     Signature        "SSDT"
- *     Length           0x00000659 (1625)
+ *     Length           0x00000694 (1684)
  *     Revision         0x02
- *     Checksum         0x8E
+ *     Checksum         0x76
  *     OEM ID           "HACK"
  *     OEM Table ID     "HackLife"
  *     OEM Revision     0x00000000 (0)
  *     Compiler ID      "INTL"
- *     Compiler Version 0x20210331 (539034417)
+ *     Compiler Version 0x20200925 (538970405)
  */
 DefinitionBlock ("", "SSDT", 2, "HACK", "HackLife", 0x00000000)
 {
@@ -37,6 +37,7 @@ DefinitionBlock ("", "SSDT", 2, "HACK", "HackLife", 0x00000000)
     External (HID2, FieldUnitObj)
     External (HIDD, MethodObj)    // 5 Arguments
     External (HIDG, FieldUnitObj)
+    External (HPTE, IntObj)
     External (INT1, FieldUnitObj)
     External (INT2, FieldUnitObj)
     External (INUM, MethodObj)    // 1 Arguments
@@ -54,6 +55,7 @@ DefinitionBlock ("", "SSDT", 2, "HACK", "HackLife", 0x00000000)
     {
         If (_OSI ("Darwin"))
         {
+            HPTE = Zero
             SDS0 = 0x03
         }
 
@@ -371,6 +373,22 @@ DefinitionBlock ("", "SSDT", 2, "HACK", "HackLife", 0x00000000)
                         {
                             Return (Zero)
                         }
+                    }
+                }
+            }
+
+            Device (PWRB)
+            {
+                Name (_HID, EisaId ("PNP0C0C") /* Power Button Device */)  // _HID: Hardware ID
+                Method (_STA, 0, NotSerialized)  // _STA: Status
+                {
+                    If (_OSI ("Darwin"))
+                    {
+                        Return (0x0F)
+                    }
+                    Else
+                    {
+                        Return (Zero)
                     }
                 }
             }
